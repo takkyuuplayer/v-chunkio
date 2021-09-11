@@ -1,11 +1,11 @@
-# v-chunkwriter
+# v-chunkio
 
 ![CI](https://github.com/takkyuuplayer/v-chunkio/workflows/CI/badge.svg)
 
 HTTP 1.1 chunk writer
 
 ```v
-import takkyuuplayer.bytebuf
+import takkyuuplayer.chunkio
 
 fn main() {
 	mut output := os.stdout()
