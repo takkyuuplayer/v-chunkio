@@ -40,7 +40,7 @@ fn test_writer() ? {
 		// big enough chunk
 		mut w := bytebuf.Buffer{}
 		mut writer := new(writer: w)
-		 written := writer.write('abc'.bytes()) ?
+		written := writer.write('abc'.bytes()) ?
 
 		assert w.bytes() == '3\r\nabc\r\n'.bytes()
 		assert written == 3
@@ -49,7 +49,7 @@ fn test_writer() ? {
 		// small chunk
 		mut w := bytebuf.Buffer{}
 		mut writer := new(writer: w, size: 1)
-		 written := writer.write('abc'.bytes()) ?
+		written := writer.write('abc'.bytes()) ?
 
 		assert w.bytes() == '1\r\na\r\n1\r\nb\r\n1\r\nc\r\n'.bytes()
 		assert written == 3
