@@ -1,4 +1,4 @@
-module httpchunkwriter
+module chunkio
 
 import io
 import strconv
@@ -11,12 +11,12 @@ mut:
 }
 
 // Config are options that can be given to a writer
-pub struct Config {
+pub struct WriterConfig {
 	size   int = 20 // the number of bytes in a chunk.
 	writer io.Writer
 }
 
-pub fn new(o Config) &Writer {
+pub fn new_writer(o WriterConfig) &Writer {
 	if o.writer is Writer {
 		return o.writer
 	}
