@@ -1,7 +1,6 @@
 module chunkio
 
 import io
-import strconv
 
 // Writer implements http1.1's chunking for an io.Writer object.
 pub struct Writer {
@@ -12,7 +11,7 @@ mut:
 
 // Config are options that can be given to a writer
 pub struct WriterConfig {
-	size   int = 20 // the number of bytes in a chunk.
+	size   int = 20 // the number of u8s in a chunk.
 	writer io.Writer
 }
 
@@ -31,16 +30,16 @@ pub fn new_writer(o WriterConfig) &Writer {
 }
 
 // write writes the contents of p into the chunk.
-// It returns the number of bytes written.
-pub fn (mut c Writer) write(buf []byte) ?int {
+// It returns the number of u8s written.
+pub fn (mut c Writer) write(buf []u8) ?int {
 	mut sum := 0
 	for start := 0; start < buf.len; start += c.size {
 		end := if start + c.size < buf.len { start + c.size } else { buf.len }
 
 		p := buf[start..end]
-		c.writer.write(strconv.v_sprintf('%x\r\n', p.len).bytes()) ?
-		c.writer.write(p) ?
-		c.writer.write('\r\n'.bytes()) ?
+		c.writer.write('$p.len\r\n'.bytes())?
+		c.writer.write(p)?
+		c.writer.write('\r\n'.bytes())?
 
 		sum += p.len
 	}
@@ -48,5 +47,5 @@ pub fn (mut c Writer) write(buf []byte) ?int {
 }
 
 pub fn (mut c Writer) close() ? {
-	c.writer.write('0\r\n\r\n'.bytes()) ?
+	c.writer.write('0\r\n\r\n'.bytes())?
 }
