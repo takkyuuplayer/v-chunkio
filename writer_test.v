@@ -46,6 +46,15 @@ fn test_writer() ? {
 		assert written == 3
 	}
 	{
+		// hex size
+		mut w := bytebuf.Buffer{}
+		mut writer := new_writer(writer: w)
+		written := writer.write('0123456789abcde'.bytes())?
+
+		assert w.bytes() == 'f\r\n0123456789abcde\r\n'.bytes()
+		assert written == 15
+	}
+	{
 		// small chunk
 		mut w := bytebuf.Buffer{}
 		mut writer := new_writer(writer: w, size: 1)
