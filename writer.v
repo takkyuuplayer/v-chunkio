@@ -37,7 +37,7 @@ pub fn (mut c Writer) write(buf []u8) ?int {
 		end := if start + c.size < buf.len { start + c.size } else { buf.len }
 
 		p := buf[start..end]
-		c.writer.write('$p.len\r\n'.bytes())?
+		c.writer.write('${p.len:x}\r\n'.bytes())?
 		c.writer.write(p)?
 		c.writer.write('\r\n'.bytes())?
 
