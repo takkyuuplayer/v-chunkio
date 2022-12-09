@@ -31,21 +31,21 @@ pub fn new_writer(o WriterConfig) &Writer {
 
 // write writes the contents of p into the chunk.
 // It returns the number of u8s written.
-pub fn (mut c Writer) write(buf []u8) ?int {
+pub fn (mut c Writer) write(buf []u8) !int {
 	mut sum := 0
 	for start := 0; start < buf.len; start += c.size {
 		end := if start + c.size < buf.len { start + c.size } else { buf.len }
 
 		p := buf[start..end]
-		c.writer.write('${p.len:x}\r\n'.bytes())?
-		c.writer.write(p)?
-		c.writer.write('\r\n'.bytes())?
+		c.writer.write('${p.len:x}\r\n'.bytes())!
+		c.writer.write(p)!
+		c.writer.write('\r\n'.bytes())!
 
 		sum += p.len
 	}
 	return sum
 }
 
-pub fn (mut c Writer) close() ? {
-	c.writer.write('0\r\n\r\n'.bytes())?
+pub fn (mut c Writer) close() ! {
+	c.writer.write('0\r\n\r\n'.bytes())!
 }
