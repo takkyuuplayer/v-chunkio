@@ -24,7 +24,7 @@ pub fn new_writer(o WriterConfig) &Writer {
 	}
 
 	return &Writer{
-		size: o.size
+		size:   o.size
 		writer: o.writer
 	}
 }
